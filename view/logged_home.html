@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+	
+	<head>
+		
+		<title>Online Shop :: {title}</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta http-equiv="content-type" content="text/html" charset="utf-8">
+		<meta http-equiv="content-language" content="pl">
+		
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
+		<link rel="stylesheet" type="text/css" href="https://cdn.sloenthran.pl/css/style.css"> 
+
+		<link rel="icon" type="image/png" href="https://cdn.sloenthran.pl/images/favicon.png" />
+		
+		<script src="https://cdn.sloenthran.pl/js/jQuery.js"></script>
+	
+	</head>
+
+	<body>
+		
+		<div id="container">
+		
+			<div id="menuclick"><i class="fa fa-th-large"></i></div>
+			
+			<script>
+	
+				$( "#menuclick" ).click(function() {
+					$( "#header_menu" ).fadeToggle();
+				});
+
+			</script>
+			
+			<a id="logomobilne" href="home.html"><img src="{logo}" alt="logo" style="width: 200px;"></a>
+        
+			<div id="header_menu">
+            
+				<a href="index.php?pages=home"><img src="{logo}" alt="logo" style="width: 200px;"></a>
+
+                <ul>
+   
+					<a href="index.php?pages=home"><li><i class="fa fa-home"></i> Strona główna</li></a>
+					<a href="index.php?pages=buy"><li><i class="fa fa-shopping-cart"></i> Zakupy</li></a>
+					<a href="index.php?pages=add_cash"><li><i class="fa fa-money"></i> Doładuj portfel</li></a>
+					<a href="index.php?pages=my_buy"><li><i class="fa fa-sort-amount-desc"></i> Moje zakupy</li></a>
+					<br>
+					<a href="index.php?pages=rules"><li><i class="fa fa-book"></i> Regulamin</li></a>
+					<a href="index.php?pages=contact"><li><i class="fa fa-book"></i> Kontakt</li></a>
+					<br>
+					<a href="index.php?pages=change_pass"><li><i class="fa fa-cog"></i> Zmiana hasła</li></a>
+					<a href="index.php?pages=logout"><li><i class="fa fa-unlock"></i> Wyloguj</li></a>	
+    
+                </ul>
+			
+			</div>
+			
+			<br><br><br><br><br>
+
+			<div id="srodek">
+        
+				<h1>{header}</h1>
+				
+				<p>{info}</p>
+				
+			</div>
+        
+		</div>
+    
+		<div class="clearfix"></div>
+    
+		<div id="footerbg">
+        
+			<div id="footer">
+			
+				<a href="index.php?pages=admin" id="mpa" style="display: none; float: left;"><i class="fa fa-paw"></i> PA</a>
+				<a href="index.php?pages=admin" id="pa"><i class="fa fa-paw"></i> Panel Admina</a>
+				
+				<span class="pull-right">
+				
+					Online Shop: <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+	
+						<span itemprop="name"><a href="https://sloenthran.pl">Sloenthran</a></span>
+			
+					</span>
+				
+				</span>
+			
+			</div>
+    
+		</div>
+    
+	</body>
+	
+</html>
