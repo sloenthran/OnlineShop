@@ -31,13 +31,13 @@
 				$Date = time();
 		
 				$Diff = $OldDate - $Date;
-				$Days = floor($Diff / (24*60*60));
+				$Days = floor($Diff / 86400);
 
-				$Diff  = $Diff - ($Days * 24*60*60);
-				$Hours = floor($Diff / (60*60));
+				$Diff  = $Diff - ($Days * 86400);
+				$Hours = floor($Diff / 3600);
 
-				$Diff    = $Diff - ($Hours * 60*60);
-				$Minutes = floor($Diff / (60));
+				$Diff    = $Diff - ($Hours * 3600);
+				$Minutes = floor($Diff / 60);
 	
 				$Seconds = $Diff - ($Minutes * 60);
 		
