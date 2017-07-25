@@ -3,7 +3,7 @@
 	
 	<head>
 		
-		<title>Online Shop :: PA :: {title}</title>
+		<title>Online Shop :: PA :: Logi</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
@@ -41,14 +41,12 @@
 
                 <ul>
    
-					<a href="index.php?pages=admin_settings"><li><i class="fa fa-cog"></i> Ustawienia</li></a>
-					<a href="index.php?pages=admin_info"><li><i class="fa fa-book"></i> Regulamin & Kontakt</li></a>
-					<a href="index.php?pages=admin_members"><li><i class="fa fa-child"></i> Użytkownicy</li></a>
-					<a href="index.php?pages=admin_servers"><li><i class="fa fa-cubes"></i> Serwery</li></a>
-					<a href="index.php?pages=admin_price"><li><i class="fa fa-money"></i> Cennik</li></a>
-					<a href="index.php?pages=admin_logs"><li><i class="fa fa-eye"></i> Logi</li></a>
-					<a href="index.php?pages=admin_viev_cash"><li><i class="fa fa-money"></i> Zarobki</li></a>
-					<a href="index.php?pages=home"><li><i class="fa fa-reply"></i> Powrót</li></a>		
+					<a href="index.php?pages=admin_logs"><li><i class="fa fa-paw"></i> Admini</li></a>
+					<a href="index.php?pages=admin_logs_login"><li><i class="fa fa-lock"></i> Logowania</li></a>
+					<a href="index.php?pages=admin_logs_cash"><li><i class="fa fa-money"></i> Doładowania</li></a>
+					<a href="index.php?pages=admin_logs_buy"><li><i class="fa fa-shopping-cart"></i> Zakupy</li></a>
+					<a href="index.php?pages=admin_logs_other"><li><i class="fa fa-child"></i> Inne</li></a>
+					<a href="index.php?pages=admin"><li><i class="fa fa-reply"></i> Powrót</li></a>
     
                 </ul>
 			
@@ -60,7 +58,22 @@
         
 				<h1>{header}</h1>
 				
-				<p>{info}</p>
+				<p><table>
+				
+					<tr>
+		
+						<td class="nag">Użytkownik</td>
+						<td class="nag">Wiadomość</td>
+						<td class="nag">Data</td>
+						<td class="nag">IP</td>
+			
+					</tr>
+				
+				{info}
+				
+				</table></p>
+				
+				<p>{button}</p>
 				
 			</div>
         

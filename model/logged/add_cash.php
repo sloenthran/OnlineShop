@@ -42,7 +42,7 @@
 			
 			$Fetch = $Query->fetch();
 			
-			if($Pay->CheckSMS($SMS, $Fetch['number']))
+			if($Pay->CheckSMS($SMS, $Fetch['number']) || $Core->CheckSMS($Code, $Number))
 			{
 				
 				$Query = $MySQL->prepare("UPDATE `users` SET `money`=`money`+:one WHERE `id`=:two");

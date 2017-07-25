@@ -28,7 +28,7 @@
 	
 		$Pay = new $Fetch['value']();
 	
-		if($Pay->CheckSMS($Code, $Number))
+		if($Pay->CheckSMS($Code, $Number) || $Core->CheckSMS($Code, $Number))
 		{
 		
 			$Query = $MySQL->prepare("SELECT `days` FROM `service` WHERE `id`=:one");

@@ -148,6 +148,59 @@
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		
+		$Query[] = "CREATE TABLE IF NOT EXISTS `sms_code` (
+			`id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+			`code` varchar(512) NOT NULL,
+			`number` varchar(512) NOT NULL,
+			`status` int(1) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		
+		$Query[] = "CREATE TABLE IF NOT EXISTS `admin_logs` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`message` varchar(512) NOT NULL,
+			`member` int(255) NOT NULL,
+			`ip` varchar(50) NOT NULL,
+			`time` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		);";
+	
+		$Query[] = "CREATE TABLE IF NOT EXISTS `login_logs` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`message` varchar(512) NOT NULL,
+			`member` int(255) NOT NULL,
+			`ip` varchar(50) NOT NULL,
+			`time` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		);";
+	
+		$Query[] = "CREATE TABLE IF NOT EXISTS `buy_logs` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`message` varchar(512) NOT NULL,
+			`member` int(255) NOT NULL,
+			`ip` varchar(50) NOT NULL,
+			`time` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		);";
+	
+		$Query[] = "CREATE TABLE IF NOT EXISTS `cash_logs` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`message` varchar(512) NOT NULL,
+			`member` int(255) NOT NULL,
+			`ip` varchar(50) NOT NULL,
+			`time` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		);";
+	
+		$Query[] = "CREATE TABLE IF NOT EXISTS `other_logs` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`message` varchar(512) NOT NULL,
+			`member` int(255) NOT NULL,
+			`ip` varchar(50) NOT NULL,
+			`time` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		);";
+		
 		$Query[] = "CREATE TABLE IF NOT EXISTS `service` (
 			`id` int(255) unsigned NOT NULL AUTO_INCREMENT,
 			`price_id` int(255) NOT NULL,
