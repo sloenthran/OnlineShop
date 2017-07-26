@@ -15,6 +15,13 @@
 			
 				$Value = $Core->ClearText($_POST[$Fetch['name']]);
 				
+				if($Fetch['value'] != $Value)
+				{
+			
+					$Core->AddAdminLogs('Zmieniono wartość ustawienia <b>'.$Fetch['name'].'</b> z <b>'.$Fetch['value'].'</b> na <b>'.$Value.'</b>');
+					
+				}
+		
 				$Prepare->bindValue(':one', $Value, PDO::PARAM_STR);
 				$Prepare->bindValue(':two', $Fetch['name'], PDO::PARAM_STR);
 			

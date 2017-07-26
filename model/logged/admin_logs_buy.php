@@ -25,7 +25,7 @@
 	
 		$Query->execute();
 		
-		$Member = $MySQL->prepare("SELECT `login` FROM `users` WHERE `id`=:one");
+		$Member = $MySQL->prepare("SELECT `login`, `id` FROM `users` WHERE `id`=:one");
 		
 		while($Fetch = $Query->fetch())
 		{
@@ -37,6 +37,12 @@
 			$FetchMember = $Member->fetch();
 			
 			$Time = date("d.m.Y H:i", $Fetch['time']);
+			
+			if($FetchMember['id'] == 0)
+			{
+				
+				$FetchMember['login'] = 'SKLEP';
+			}
 			
 			$Info .= '<tr>
 		

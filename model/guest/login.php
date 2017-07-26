@@ -40,6 +40,8 @@
 				$_SESSION['ID'] = $Fetch['id'];
 				$_SESSION['ID_TIME'] = time();
 				
+				$Core->AddLoginLogs("Zalogowano");
+				
 				header("Location: index.php?pages=home");
 			
 			}

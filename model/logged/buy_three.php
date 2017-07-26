@@ -71,7 +71,7 @@
 				$View->Add('info', 'Posiadałeś już ten zakup na tym serwerze więc został on przedłużony.');
 				$View->Add('back', 'index.php?pages=home');
 				$View->Out();
-				
+
 				$_SESSION['SERVERID'] = 0;
 
 			}

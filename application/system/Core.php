@@ -147,7 +147,7 @@
 			
 			global $_SESSION, $MySQL;
 			
-			$Query = $MySQL->prepare("INSERT INTO `admin_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `admin_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
 			$Query->bindValue(":two", $_SESSION['ID'], PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -160,7 +160,7 @@
 			
 			global $_SESSION, $MySQL;
 			
-			$Query = $MySQL->prepare("INSERT INTO `login_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `login_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
 			$Query->bindValue(":two", $_SESSION['ID'], PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -173,7 +173,7 @@
 			
 			global $_SESSION, $MySQL;
 			
-			$Query = $MySQL->prepare("INSERT INTO `buy_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `buy_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
 			$Query->bindValue(":two", $_SESSION['ID'], PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -186,12 +186,9 @@
 			
 			global $MySQL;
 			
-			$Query = $MySQL->query("SELECT `value` FROM `settings` WHERE `name`='user_gest_buy'");
-			$Fetch = $Query->fetch();
-			
-			$Query = $MySQL->prepare("INSERT INTO `buy_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `buy_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
-			$Query->bindValue(":two", $Fetch['value'], PDO::PARAM_INT);
+			$Query->bindValue(":two", 0, PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
 			$Query->execute();
 			
@@ -202,7 +199,7 @@
 			
 			global $_SESSION, $MySQL;
 			
-			$Query = $MySQL->prepare("INSERT INTO `cash_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `cash_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
 			$Query->bindValue(":two", $_SESSION['ID'], PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -215,10 +212,24 @@
 			
 			global $_SESSION, $MySQL;
 			
-			$Query = $MySQL->prepare("INSERT INTO `other_logs` VALUES('', :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
+			$Query = $MySQL->prepare("INSERT INTO `other_logs` VALUES(NULL, :one, :two, :three, UNIX_TIMESTAMP(NOW()))");
 			$Query->bindValue(":one", $Text, PDO::PARAM_STR);
 			$Query->bindValue(":two", $_SESSION['ID'], PDO::PARAM_INT);
 			$Query->bindValue(":three", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+			$Query->execute();
+			
+		}
+		
+		function AddServerCash($ID, $Cash)
+		{
+			
+			global $MySQL;
+			
+			$Query = $MySQL->prepare("INSERT INTO `server_cash` VALUES(NULL, :one, :two, CURRENT_TIMESTAMP)");
+			
+			$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+			$Query->bindValue(":two", $Cash, PDO::PARAM_INT);
+			
 			$Query->execute();
 			
 		}

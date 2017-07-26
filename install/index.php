@@ -223,6 +223,14 @@
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 		
+		$Query[] = "CREATE TABLE IF NOT EXISTS `server_cash` (
+			`id` int(255) NOT NULL AUTO_INCREMENT,
+			`server_id` int(255) NOT NULL,
+			`value` varchar(512) NOT NULL,
+			`time` timestamp,
+			PRIMARY KEY (`id`)
+		);";
+		
 		$Query[] = "INSERT INTO `users` VALUES('', '".$User."', '".$Pass."', '1', '0', '".$Mail."', '000000000', '0')";
 
 		$Query[] = "INSERT INTO `settings` VALUES('', 'text_sms', 'Tutaj wpisz kod SMS')";

@@ -62,20 +62,22 @@
 					$Query->execute();
 				
 					$Fetch = $Query->fetch();
-				
 					$User = $Fetch['login'];
 				
-					$Query = $MySQL->prepare("SELECT `server` FROM `buy` WHERE `id`=:one");
+					$Query = $MySQL->prepare("SELECT `name` FROM `buy` WHERE `id`=:one");
 					$Query->bindValue(":one", $PremiumID, PDO::PARAM_INT);
 					$Query->execute();
 				
 					$Fetch = $Query->fetch();
+					$Service = $Fetch['name']
 				
 					$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
-					$Query->bindValue(":one", $Fetch['server'], PDO::PARAM_INT);
+					$Query->bindValue(":one", $ID, PDO::PARAM_INT);
 					$Query->execute();
 				
 					$Fetch = $Query->fetch();
+					
+					$Core->AddAdminLogs("Dodano użytkownikowi <b>".$User."</b> usługę ".$Service."  na serwerze <b>".$Fetch['name']."</b> (<b>".$Nick."</b> | ".$Days." dni)");
 				
 					$View->Load("info");
 					$View->Add("title", "Usługa dodana");

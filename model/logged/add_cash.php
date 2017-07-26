@@ -59,6 +59,8 @@
 				$View->Add('back', 'index.php?pages=add_cash&id='.$ID.'');
 				$View->Out();
 				
+				$Core->AddCashLogs("Doładowano ".$ID." wPLN (".$SMS.")");
+				
 			}
 			
 			else
@@ -70,6 +72,8 @@
 				$View->Add('info', 'Podany przez Ciebie kod SMS jest błędny!');
 				$View->Add('back', 'index.php?pages=add_cash&id='.$ID.'');
 				$View->Out();
+				
+				$Core->AddCashLogs("Błędny kod SMS (".$SMS.")");
 				
 			}
 			

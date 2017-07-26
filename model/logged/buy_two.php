@@ -42,18 +42,18 @@
 		
 		$FetchTwo = $QueryTwo->fetch();
 		
-		$QueryThree = $MySQL->prepare("SELECT `vat` FROM `price` WHERE `id`=:one");
+		$QueryThree = $MySQL->prepare("SELECT `value` FROM `price` WHERE `id`=:one");
 		$QueryThree->bindValue(":one", $FetchTwo['price_id'], PDO::PARAM_INT);
 		$QueryThree->execute();
 		
 		$FetchThree = $QueryThree->fetch();
-		$Cash = $FetchThree['vat'];
+		$Cash = $FetchThree['value'];
 	
 		$Info .= ''.$Fetch['description'].'<br><br><br><br><a href="index.php?pages=buy_three&id='.$ID.'&priceid='.$PriceID.'"><button class="przycisk">Kupuję!</button></a>';
 
 		$View->Load("info");
 		$View->Add("title", "Zakup :: ".$Fetch['name']."");
-		$View->Add("header", "".$Fetch['name']." na ".$FetchTwo['days']." dni [".$Cash." PLN]");
+		$View->Add("header", "".$Fetch['name']." na ".$FetchTwo['days']." dni [".$Cash." wPLN]");
 		$View->Add("info", $Info);
 		$View->Add("back", "index.php?pages=buy_two&id=".$ID."");
 		$View->Out();

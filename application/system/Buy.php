@@ -36,7 +36,7 @@
 			
 				$Fetch = $Query->fetch();
 			
-				$Query = $MySQL->prepare("INSERT INTO `premium_cache` VALUES('', :one, :three, :four, :five, :six, :seven)");
+				$Query = $MySQL->prepare("INSERT INTO `premium_cache` VALUES(NULL, :one, :three, :four, :five, :six, :seven)");
 				
 				$Query->bindValue(":one", $Nick, PDO::PARAM_STR);
 				$Query->bindValue(":three", $BuyData['flags'], PDO::PARAM_STR);
@@ -62,7 +62,7 @@
 			else
 			{
 				
-				$Query = $MySQL->prepare("INSERT INTO `premium` VALUES('', :one, :three, :four)");
+				$Query = $MySQL->prepare("INSERT INTO `premium` VALUES(NULL, :one, :three, :four)");
 				
 				$Query->bindValue(":one", $Nick, PDO::PARAM_STR);
 				$Query->bindValue(":three", $BuyData['flags'], PDO::PARAM_STR);
@@ -70,7 +70,7 @@
 				
 				$Query->execute();
 				
-				$Query = $MySQL->prepare("INSERT INTO `premium_cache` VALUES('', :one, :three, :four, :five, :six, :seven)");
+				$Query = $MySQL->prepare("INSERT INTO `premium_cache` VALUES(NULL, :one, :three, :four, :five, :six, :seven)");
 				
 				$Query->bindValue(":one", $Nick, PDO::PARAM_STR);
 				$Query->bindValue(":three", $BuyData['flags'], PDO::PARAM_STR);
