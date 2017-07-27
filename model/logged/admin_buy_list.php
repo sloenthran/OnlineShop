@@ -76,6 +76,10 @@
 				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
 				$Query->execute();
 				
+				$Query = $MySQL->prepare("DELETE FROM `service` WHERE `buy_id`=:one");
+				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+				$Query->execute();
+				
 				$View->Load("info");
 				$View->Add('title', 'Usługa usunięta');
 				$View->Add('header', 'Usługa usunięta!');
