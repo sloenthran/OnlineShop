@@ -77,7 +77,7 @@
 				
 					$Fetch = $Query->fetch();
 					
-					$Core->AddAdminLogs("Dodano użytkownikowi <b>".$User."</b> usługę ".$Service."  na serwerze <b>".$Fetch['name']."</b> (<b>".$Nick."</b> | ".$Days." dni)");
+					$Core->AddAdminLogs("Dodano użytkownikowi <b>".$User."</b> usługę ".$Service."  na serwerze <b>".$Fetch['name']."</b> (".$Nick." | ".$Days." dni)");
 				
 					$View->Load("info");
 					$View->Add("title", "Usługa dodana");
