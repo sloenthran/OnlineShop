@@ -121,7 +121,78 @@
 			else
 			{
 				
+				$Query = $MySQL->prepare("SELECT * FROM `premium_cache` WHERE `id`=:one");
+				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+				$Query->execute();
 				
+				$Fetch = $Query->fetch();
+				
+				if($_POST['SAVE'])
+				{
+					
+					$Nick = $Core->ClearText($_POST['NAME']);
+					$Time = $Core->ClearText($_POST['TIME']);
+					
+					$Time = strtotime($Time);
+				
+					if($Fetch['nick'] == $Nick)
+					{
+						
+						$Query = $MySQL->prepare("UPDATE `premium_cache` SET `nick`=:one, `time`=:two WHERE `id`=:three");
+						$Query->bindValue(":one", $Nick, PDO::PARAM_STR);
+						$Query->bindValue(":two", $Time, PDO::PARAM_INT);
+						$Query->bindValue(":three", $ID, PDO::PARAM_INT);
+						$Query->execute();
+					
+					}
+					
+					else
+					{
+						
+						$Query = $MySQL->prepare("UPDATE `premium_cache` SET `time`='1' WHERE `id`=:one");
+						$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+						$Query->execute();
+						
+						$Buy = new Buy();
+			
+						$Buy->AddTimeStampBuy($Nick, $Fetch['premium_id'], $Fetch['user_id'], $Time);
+						
+					}
+					
+					$View->Load("info");
+					$View->Add('title', 'Zmiany zapisane');
+					$View->Add('header', 'Zmiany zapisane!');
+					$View->Add('info', 'Zmiany zostały poprawnie zapisane!');
+					$View->Add('back', 'index.php?pages=admin_members_buy');
+					$View->Out();
+					
+				}
+				
+				else
+				{
+					
+					$_SESSION['SERVERID'] = $Fetch['server'];
+					
+					$Time = date("d-m-Y H:i:s", $Fetch['time']);
+					
+					$Info .= '<form method="post" action="index.php?pages=admin_members_buy&id='.$ID.'&action=edit">
+		
+						<input type="hidden" name="SAVE" value="true">
+			
+						<br><input type="text" name="NAME" placeholder="SID lub Nick" value="'.$Fetch['nick'].'"><br>
+						<br><input type="text" name="TIME" placeholder="Do kiedy" value="'.$Time.'"><br>
+			
+						<br><button type="submit" class="przycisk">Zapisz <i class="fa fa-chevron-circle-right"></i> </button>
+		
+					</form>';
+					
+					$View->Load("admin_members");
+					$View->Add('title', 'Edycja usługi');
+					$View->Add('header', 'Edycja usługi');
+					$View->Add('info', $Info);
+					$View->Out();
+					
+				}
 				
 			}
 			

@@ -69,7 +69,7 @@
 					$Query->execute();
 				
 					$Fetch = $Query->fetch();
-					$Service = $Fetch['name']
+					$Service = $Fetch['name'];
 				
 					$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
 					$Query->bindValue(":one", $ID, PDO::PARAM_INT);
