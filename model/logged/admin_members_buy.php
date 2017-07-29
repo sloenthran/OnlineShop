@@ -102,12 +102,28 @@
 		else
 		{
 			
+			$Query = $MySQL->prepare("SELECT * FROM `premium_cache` WHERE `id`=:one");
+			$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+			$Query->execute();
+
+			$Fetch = $Query->fetch();
+			
 			if($Action == 'delete')
 			{
 				
 				$Query = $MySQL->prepare("UPDATE `premium_cache` SET `time`='1' WHERE `id`=:one");
 				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
 				$Query->execute();
+				
+				$Time = date("d-m-Y H:i:s", $Fetch['time']);
+				
+				$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
+				$Query->bindValue(":one", $Fetch['server'], PDO::PARAM_INT);
+				$Query->execute();
+				
+				$FetchTwo = $Query->fetch();
+				
+				$Core->AddAdminLogs('Usunięto usługę <b>#'.$ID.'</b> na nick <b>'.$Fetch['nick'].'</b> ważną do <b>'.$Time.'</b> z serwera <b>'.$FetchTwo['name'].'</b>');
 				
 				$View->Load("info");
 				$View->Add('title', 'Usługa usunięta');
@@ -120,12 +136,6 @@
 			
 			else
 			{
-				
-				$Query = $MySQL->prepare("SELECT * FROM `premium_cache` WHERE `id`=:one");
-				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
-				$Query->execute();
-				
-				$Fetch = $Query->fetch();
 				
 				if($_POST['SAVE'])
 				{
@@ -158,6 +168,8 @@
 						$Buy->AddTimeStampBuy($Nick, $Fetch['premium_id'], $Fetch['user_id'], $Time);
 						
 					}
+					
+					$Core->AddAdminLogs('Zmieniono dane usługi <b>#'.$ID.'</b> z nicku <b>'.$Fetch['nick'].'</b> na nick <b>'.$Nick.'</b> oraz czas z <b>'.date("d-m-Y H:i:s", $Fetch['time']).'</b> na <b>'.date("d-m-Y H:i:s", $Time).'</b>');
 					
 					$View->Load("info");
 					$View->Add('title', 'Zmiany zapisane');
