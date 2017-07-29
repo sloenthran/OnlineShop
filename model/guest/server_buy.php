@@ -78,7 +78,7 @@
 			
 			echo 'extension|' . $SID;
 			
-			$Core->AddGuestBuyLogs('[Plugin] Przedłużono '.$Data[0].' na serwerze '.$Data[1].' kodem SMS '.$Code.' ('.$Data[4].' dni | '.$SID.')');
+			$Core->AddGuestBuyLogs('[Plugin] Przedłużono <b>'.$Data[0].'</b> na serwerze <b>'.$Data[1].'</b> kodem SMS <b>'.$Code.'</b> ('.$Data[4].' dni | '.$SID.')');
 
 		}
 
@@ -91,7 +91,7 @@
 			
 			echo 'ok|' . $SID;
 			
-			$Core->AddGuestBuyLogs('[Plugin] Zakupiono '.$Data[0].' na serwerze '.$Data[1].' kodem SMS '.$Code.' ('.$Data[4].' dni | '.$SID.')');
+			$Core->AddGuestBuyLogs('[Plugin] Zakupiono <b>'.$Data[0].'</b> na serwerze <b>'.$Data[1].'</b> kodem SMS <b>'.$Code.'</b> ('.$Data[4].' dni | '.$SID.')');
 		
 		}
 		
