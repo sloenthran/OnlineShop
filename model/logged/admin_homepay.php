@@ -28,6 +28,8 @@
 			$View->Add('info', 'Ustawienia zostały poprawnie zapisane!');
 			$View->Add('back', 'index.php?pages=admin_homepay');
 			$View->Out();
+			
+			$Core->AddAdminLogs("Zmieniono ID usług HomePay");
 		
 		}
 	

@@ -69,7 +69,7 @@
 				else
 				{
 		
-					$Query = $MySQL->prepare("INSERT INTO `buy` VALUES('', :one, :three, :four, :five)");
+					$Query = $MySQL->prepare("INSERT INTO `buy` VALUES(NULL, :one, :three, :four, :five)");
 				
 					$Query->bindValue(":one", $Name, PDO::PARAM_STR);
 					$Query->bindValue(":three", $Flags, PDO::PARAM_STR);
@@ -84,6 +84,14 @@
 					$View->Add("info", "Usługa została poprawnie dodana!");
 					$View->Add("back", "index.php?pages=admin_add_buy");
 					$View->Out();
+					
+					$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
+					$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+					$Query->execute();
+					
+					$Fetch = $Query->fetch();
+			
+					$Core->AddAdminLogs("Dodano usługę ".$Name." z flagami ".$Flags." na serwerze ".$Fetch['name']."");
 			
 				}
 			

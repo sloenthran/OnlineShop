@@ -231,36 +231,36 @@
 			PRIMARY KEY (`id`)
 		);";
 		
-		$Query[] = "INSERT INTO `users` VALUES('', '".$User."', '".$Pass."', '1', '0', '".$Mail."', '000000000', '0')";
+		$Query[] = "INSERT INTO `users` VALUES(NULL, '".$User."', '".$Pass."', '1', '0', '".$Mail."', '000000000', '0')";
 
-		$Query[] = "INSERT INTO `settings` VALUES('', 'text_sms', 'Tutaj wpisz kod SMS')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'logo', 'https://cdn.sloenthran.pl/images/logo.png')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'simpay_api', 'Tutaj wpisz klucz API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'simpay_api_key', 'Tutaj wpisz hasło API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'simpay_service', 'Tutaj wpisz ID usługi')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'pay', 'SimPay')";
-		$Query[] = "INSERT INTO `settings` VALUES('', '1s1k_api', 'Tutaj wpisz klucz API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'homepay_api', 'Tutaj wpisz klucz API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'microsms_user', 'Tutaj wpisz id klienta')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'microsms_service', 'Tutaj wpisz id usługi')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'pukawka_api', 'Tutaj wpisz klucz API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'hostplay_api', 'Tutaj wpisz klucz API')";
-		$Query[] = "INSERT INTO `settings` VALUES('', 'cssetti_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'text_sms', 'Tutaj wpisz kod SMS')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'logo', 'https://cdn.sloenthran.pl/images/logo.png')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'simpay_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'simpay_api_key', 'Tutaj wpisz hasło API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'simpay_service', 'Tutaj wpisz ID usługi')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'pay', 'SimPay')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, '1s1k_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'homepay_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'microsms_user', 'Tutaj wpisz id klienta')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'microsms_service', 'Tutaj wpisz id usługi')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'pukawka_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'hostplay_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'cssetti_api', 'Tutaj wpisz klucz API')";
 		
-		$Query[] = "INSERT INTO `info` VALUES('', 'rules', 'Regulamin')";
-		$Query[] = "INSERT INTO `info` VALUES('', 'contact', 'Kontakt')";
+		$Query[] = "INSERT INTO `info` VALUES(NULL, 'rules', 'Regulamin')";
+		$Query[] = "INSERT INTO `info` VALUES(NULL, 'contact', 'Kontakt')";
 		
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7055', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7155', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7255', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7355', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7455', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7555', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7655', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '7955', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '91455', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '91955', '')";
-		$Query[] = "INSERT INTO `homepay` VALUES('', '92555', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7055', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7155', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7255', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7355', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7455', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7555', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7655', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '7955', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '91455', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '91955', '')";
+		$Query[] = "INSERT INTO `homepay` VALUES(NULL, '92555', '')";
 		
 		require_once('../config.php');
 	

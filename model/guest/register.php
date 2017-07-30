@@ -79,7 +79,7 @@
 					else
 					{
 					
-						$Query = $MySQL->prepare("INSERT INTO `users` VALUES('', :one, :two, '0', '0', :three, '000000000', '0')");
+						$Query = $MySQL->prepare("INSERT INTO `users` VALUES(NULL, :one, :two, '0', '0', :three, '000000000', '0')");
 						
 						$Query->bindValue(":one", $Name, PDO::PARAM_STR);
 						$Query->bindValue(":two", sha1(md5($Pass)), PDO::PARAM_STR);
