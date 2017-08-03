@@ -22,6 +22,8 @@
 		
 			}
 			
+			$Core->AddAdminLogs("Zmieniono treść stron informacyjnych");
+			
 			$View->Load('info');
 			$View->Add('title', 'Teksty zostały zapisane');
 			$View->Add('header', 'Teksty zapisane');

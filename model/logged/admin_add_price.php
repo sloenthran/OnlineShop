@@ -25,13 +25,15 @@
 			else
 			{
 		
-				$Query = $MySQL->prepare("INSERT INTO `price` VALUES('', :one, :two, :three)");
+				$Query = $MySQL->prepare("INSERT INTO `price` VALUES(NULL, :one, :two, :three)");
 				
 				$Query->bindValue(":one", $VAT, PDO::PARAM_STR);
 				$Query->bindValue(":two", $Value, PDO::PARAM_STR);
 				$Query->bindValue(":three", $Number, PDO::PARAM_INT);
 				
 				$Query->execute();
+				
+				$Core->AddAdminLogs("Dodano cenę na numer ".$Number." (".$Value." | ".$VAT.")");
 				
 				$View->Load("info");
 				$View->Add("title", "Cena dodana");
