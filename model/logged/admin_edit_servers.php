@@ -68,6 +68,8 @@
 				$Query->bindValue(":four", $ID, PDO::PARAM_INT);
 				$Query->execute();
 				
+				$Core->AddAdminLogs("Zmieniono dane serwera ".$Name."");
+				
 				$View->Load("info");
 				$View->Add("title", "Zmiany zapisane");
 				$View->Add("header", "Zmiany zapisane!");

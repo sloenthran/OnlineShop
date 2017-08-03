@@ -33,6 +33,8 @@
 				
 				$Query->execute();
 				
+				$Core->AddAdminLogs("Dodano serwer ".$Name."");
+				
 				$View->Load("info");
 				$View->Add("title", "Serwer dodany");
 				$View->Add("header", "Serwer dodany!");
