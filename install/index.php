@@ -246,6 +246,8 @@
 		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'pukawka_api', 'Tutaj wpisz klucz API')";
 		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'hostplay_api', 'Tutaj wpisz klucz API')";
 		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'cssetti_api', 'Tutaj wpisz klucz API')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'liveserver_cid', 'Tutaj wpisz ID klienta')";
+		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'liveserver_pin', 'Tutaj wpisz PIN')";
 		
 		$Query[] = "INSERT INTO `info` VALUES(NULL, 'rules', 'Regulamin')";
 		$Query[] = "INSERT INTO `info` VALUES(NULL, 'contact', 'Kontakt')";
