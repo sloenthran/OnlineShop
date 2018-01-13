@@ -16,7 +16,7 @@ char ShopURL[64];
 
 public Plugin myinfo = 
 { 
-	name = "Online Shop [v1.3.5]", 
+	name = "Online Shop [v1.3.6]", 
 	author = "Sloenthran", 
 	description = "Online Shop", 
 	url = "sloenthran.pl" 
@@ -73,7 +73,7 @@ public void OnPluginStart()
 	} else { SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL OnPluginStart #3] %s", Error); }
 }
 
-public void OnClientPutInServer(User) 
+public void OnClientPutInServer(int User) 
 { 
 	PlayerBuy[User] = false; 
 	PlayerBuyCache[User] = 0;
@@ -105,8 +105,8 @@ public void GiveFlag(int User)
 				
 				SetUserFlagBits(User, FlagsInt);	
 			}
-		}
-	} else { SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL GiveFlag] %s", Error); }
+		} else { SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL GiveFlag] %s", Error); }
+	}
 }
 
 /////////////////////////////////////////////////// Menu //////////////////////////////////////////////////////
