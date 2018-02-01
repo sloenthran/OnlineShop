@@ -18,10 +18,10 @@
 			
 			$Service = $Fetch['value'];
 			
-			$Query = @file_get_contents("http://microsms.pl/api/v2/multi.php?userid=".$User."&code=".$CodeSMS."&serviceid=".$Service);
+			$Query = @file_get_contents("http://microsms.pl/api/v2/multi.php?userid=".$User."&code=".$CodeSMS."&serviceid=".$Service."&number=".$NumberSMS);
 			$Fetch = json_decode($Query);
 			
-			if ($Fetch->data->status == 1) { return true; }
+			if ($Fetch->data->status == 1 && $Fetch->data->number == $NumberSMS) { return true; }
 			
 			return false;
 			
