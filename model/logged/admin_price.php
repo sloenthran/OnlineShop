@@ -80,6 +80,8 @@
 					$View->Add('back', 'index.php?pages=admin_price');
 					$View->Out();
 					
+					$Core->AddAdminLogs("Usunięto cenę o ID #".$ID."");
+					
 				}
 				
 			}
@@ -107,6 +109,8 @@
 					$View->Add('info', 'Zmiany w cenie zostały poprawnie zapisane!');
 					$View->Add('back', 'index.php?pages=admin_price');
 					$View->Out();
+					
+					$Core->AddAdminLogs("Zmieniono cenę o ID #".$ID."");
 					
 				}
 				

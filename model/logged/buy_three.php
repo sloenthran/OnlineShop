@@ -8,11 +8,12 @@
 		
 		$SID = $Core->ClearText($_POST['USER']);
 	
-		$Query = $MySQL->prepare("SELECT `price_id` FROM `service` WHERE `id`=:one");
+		$Query = $MySQL->prepare("SELECT `price_id`, `buy_id` FROM `service` WHERE `id`=:one");
 		$Query->bindParam(":one", $PriceID, PDO::PARAM_INT);
 		$Query->execute();
 	
 		$Fetch = $Query->fetch();
+		$BuyID = $Fetch['buy_id'];
 		$Fetch = $Fetch['price_id'];
 	
 		$Query = $MySQL->prepare("SELECT `value` FROM `price` WHERE `id`=:one");
@@ -46,6 +47,22 @@
 			$Fetch = $Query->fetch();
 		
 			$Days = $Fetch['days'];
+			
+			$Query = $MySQL->("SELECT `name` FROM `buy` WHERE `id`=:one");
+			$Query->bindValue(":one", $BuyID, PDO::PARAM_INT);
+			$Query->execute();
+			
+			$Fetch = $Query->fetch();
+			
+			$PremiumName = $Fetch['name'];
+			
+			$Query = $MySQL->("SELECT `name` FROM `servers` WHERE `id`=:one");
+			$Query->bindValue(":one", $_SESSION['SERVERID'], PDO::PARAM_INT);
+			$Query->execute();
+			
+			$Fetch = $Query->fetch();
+			
+			$ServerName = $Fetch['name'];
 		
 			$Query = $MySQL->prepare("SELECT `id` FROM `premium_cache` WHERE `nick`=:one AND `premium_id`=:two AND `server`=:three");
 			$Query->bindValue(":one", $SID, PDO::PARAM_STR);
@@ -57,6 +74,8 @@
 			{
 			
 				$Fetch = $Query->fetch();
+				
+				$Core->AddBuyLogs("Przedłużono usługę <b>".$PremiumName."</b> na serwerze <b>".$ServerName."</b> dla <b>".$SID."</b> o <b>".$Days."</b> dni");
 			
 				$Days = $Days * 86400;
 			
@@ -82,6 +101,8 @@
 				$Buy = new Buy();
 			
 				$Buy->AddBuy($SID, $ID, $_SESSION['ID'], $Days);
+				
+				$Core->AddBuyLogs("Dodano usługę <b>".$PremiumName."</b> na serwerze <b>".$ServerName."</b> dla <b>".$SID."</b> na <b>".$Days."</b> dni");
 			
 				$View->Load("info");
 				$View->Add('title', 'Zakup dodany');

@@ -55,8 +55,8 @@
 			$Info .= '</table>';
 	
 			$View->Load("admin_servers");
-			$View->Add('title', 'Cennik');
-			$View->Add('header', 'Cennik');
+			$View->Add('title', 'Lista usług');
+			$View->Add('header', 'Lista usług');
 			$View->Add("info", $Info);
 			$View->Out();
 			
@@ -67,6 +67,12 @@
 			
 			if($Action == 'delete')
 			{
+				
+				$Query = $MySQL->prepare("SELECT `name` FROM `buy` WHERE `id`=:one");
+				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+				$Query->execute();
+				
+				$Fetch = $Query->fetch();
 				
 				$Query = $MySQL->prepare("DELETE FROM `buy` WHERE `id`=:one");
 				$Query->bindValue(":one", $ID, PDO::PARAM_INT);
@@ -87,6 +93,8 @@
 				$View->Add('back', 'index.php?pages=admin_buy_list');
 				$View->Out();
 				
+				$Core->AddAdminLogs("Usunięto usługę ".$Fetch['name']."");
+				
 			}
 			
 			else
@@ -94,6 +102,12 @@
 				
 				if($_POST['SAVE'])
 				{
+					
+					$Query = $MySQL->prepare("SELECT `name` FROM `buy` WHERE `id`=:one");
+					$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+					$Query->execute();
+				
+					$Fetch = $Query->fetch();
 					
 					$Name = $Core->ClearText($_POST['NAME']);
 					$Flags = $Core->ClearText($_POST['FLAGS']);
@@ -112,6 +126,8 @@
 					$View->Add('info', 'Zmiany w usłudze zostały poprawnie zapisane!');
 					$View->Add('back', 'index.php?pages=admin_buy_list');
 					$View->Out();
+					
+					$Core->AddAdminLogs("Zmieniono szczegóły usługi ".$Fetch['name']."");
 					
 				}
 				

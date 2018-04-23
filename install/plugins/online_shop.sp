@@ -8,6 +8,7 @@ Handle DB = INVALID_HANDLE;
 int ServerPort = 0; 
 int ServerID = 0;
 int PlayerBuy[66];
+int PlayerBuyCredits[66];
 int PlayerBuyCache[66];
 
 char TextSMS[64]; 
@@ -16,7 +17,7 @@ char ShopURL[64];
 
 public Plugin myinfo = 
 { 
-	name = "Online Shop [v1.3.6]", 
+	name = "Online Shop [v1.6.5]", 
 	author = "Sloenthran", 
 	description = "Online Shop", 
 	url = "sloenthran.pl" 
@@ -76,6 +77,7 @@ public void OnPluginStart()
 public void OnClientPutInServer(int User) 
 { 
 	PlayerBuy[User] = false; 
+	PlayerBuyCredits[User] = false;
 	PlayerBuyCache[User] = 0;
 	GiveFlag(User);
 }
@@ -116,7 +118,8 @@ public Action GlobalMenu(int User, int Arg)
 	Handle OpenMenu = CreateMenu(HandleGlobalMenu);
 	SetMenuTitle(OpenMenu, "*Online Shop by Sloenthran*");
 	AddMenuItem(OpenMenu, "1", "Zakup usługę");
-	AddMenuItem(OpenMenu, "2", "Moje usługi");
+	AddMenuItem(OpenMenu, "2", "Zakup kredyty");
+	AddMenuItem(OpenMenu, "3", "Moje usługi");
 	SetMenuPagination(OpenMenu, 7);
 	SetMenuExitButton(OpenMenu, true);
 	DisplayMenu(OpenMenu, User, 250);
@@ -131,7 +134,8 @@ public int HandleGlobalMenu(Handle MenuID, MenuAction Data, int User, int Info)
 		GetMenuItem(MenuID, Info, Item, sizeof(Item));
 		
 		if(StrEqual(Item, "1")) { BuyMenu(User, 0); }
-		else if(StrEqual(Item, "2")) { MyServiceMenu(User, 0); }
+		else if(StrEqual(Item, "2")) { BuyCreditMenu(User, 0); }
+		else if(StrEqual(Item, "3")) { MyServiceMenu(User, 0); }
 	} else if(Data == MenuAction_End) { CloseHandle(MenuID); }
 }
 
@@ -248,11 +252,8 @@ public int DaysMenuHandle(Handle MenuID, MenuAction Data, int User, int Info)
 			{
 				if(SQL_FetchRow(QueryDB))
 				{
-					char Name[64];
 					
 					int Price = SQL_FetchInt(QueryDB, 0); int Days = SQL_FetchInt(QueryDB, 1); int BuyID = SQL_FetchInt(QueryDB, 2);
-			
-					SQL_FetchString(QueryDB, 1, Name, sizeof(Name));
 					
 					Format(Query, sizeof(Query), "SELECT `vat`, `number` FROM `price` WHERE `id`='%i'", Price); QueryDB = SQL_Query(DB, Query);
 			
@@ -272,6 +273,8 @@ public int DaysMenuHandle(Handle MenuID, MenuAction Data, int User, int Info)
 							{
 								if(SQL_FetchRow(QueryDB))
 								{
+									char Name[64];
+									
 									SQL_FetchString(QueryDB, 0, Name, sizeof(Name));
 									
 									Format(Query, sizeof(Query), "*Online Shop by Sloenthran*\n Aby zakupić %s [%i dni] wyślij SMS-a o treści %s na numer %i\nNastępnie naciśnij na OK i podaj kod zwrotny w wiadomości na czacie.\nCałkowity koszt SMS-a wynosi %s", Name, Days, TextSMS, Number, VAT);
@@ -307,6 +310,127 @@ public int ConfirmMenuHandle(Handle MenuID, MenuAction Data, int User, int Info)
 }
 
 ////////////////////////////////////////////////// End Buy Menu ///////////////////////////////////////////////
+
+////////////////////////////////////////////////// Buy Credit Menu ///////////////////////////////////////////////////
+
+public void BuyCreditMenu(int User, int Arg)
+{
+	char Query[256];
+	
+	Handle OpenMenu = CreateMenu(BuyCreditMenuHandle);
+	
+	SetMenuTitle(OpenMenu, "*Online Shop by Sloenthran*\nWybierz ilość kredytów");
+	
+	Format(Query, sizeof(Query), "SELECT `id` FROM `buy_credits` WHERE `server`='%i'", ServerID); 
+	
+	Handle QueryDB = SQL_Query(DB, Query);
+	
+	if(QueryDB != INVALID_HANDLE)
+	{
+		while(SQL_FetchRow(QueryDB))
+		{	
+			int ID = SQL_FetchInt(QueryDB, 0);
+			
+			Format(Query, sizeof(Query), "SELECT `id`, `amount` FROM `service_credits` WHERE `buy_id`='%i'", ID); 
+	
+			QueryDB = SQL_Query(DB, Query);
+	
+			if(QueryDB != INVALID_HANDLE)
+			{
+				while(SQL_FetchRow(QueryDB))
+				{
+					char NameID[16]; 
+					char AmountName[16];
+					
+					int GetID = SQL_FetchInt(QueryDB, 0);
+					int GetAmount = SQL_FetchInt(QueryDB, 1);
+					
+					Format(NameID, sizeof(NameID), "%i", GetID);
+					Format(AmountName, sizeof(AmountName), "%i kredytów", GetAmount);
+					
+					AddMenuItem(OpenMenu, NameID, AmountName);			
+				}
+			}
+		}
+	} else { char Error[256]; SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL BuyMenu] %s", Error); }
+
+	AddMenuItem(OpenMenu, "back", "Powrót");
+	SetMenuPagination(OpenMenu, 7);
+	SetMenuExitButton(OpenMenu, true);
+	DisplayMenu(OpenMenu, User, 250);
+}
+
+public int BuyCreditMenuHandle(Handle MenuID, MenuAction Data, int User, int Info)
+{
+	if(Data == MenuAction_Select)
+	{
+		char Item[16];
+
+		GetMenuItem(MenuID, Info, Item, sizeof(Item));
+		
+		if(StrEqual(Item, "back")) 
+		{ 
+			GlobalMenu(User, 0); 
+		}
+		else 
+		{
+			char Error[256];
+			char Query[256];
+			
+			PlayerBuyCache[User] = StringToInt(Item);
+			
+			Format(Query, sizeof(Query), "SELECT `price_id`, `amount` FROM `service_credits` WHERE `id`='%s'", Item); Handle QueryDB = SQL_Query(DB, Query);
+			
+			if(QueryDB != INVALID_HANDLE)
+			{
+				if(SQL_FetchRow(QueryDB))
+				{
+					
+					int Price = SQL_FetchInt(QueryDB, 0); int Amount = SQL_FetchInt(QueryDB, 1);
+					
+					Format(Query, sizeof(Query), "SELECT `vat`, `number` FROM `price` WHERE `id`='%i'", Price); QueryDB = SQL_Query(DB, Query);
+			
+					if(QueryDB != INVALID_HANDLE)
+					{
+						if(SQL_FetchRow(QueryDB))
+						{
+							char VAT[16];
+					
+							SQL_FetchString(QueryDB, 0, VAT, sizeof(VAT));
+					
+							int Number = SQL_FetchInt(QueryDB, 1);
+									
+							Format(Query, sizeof(Query), "*Online Shop by Sloenthran*\n Aby zakupić %i kredytów wyślij SMS-a o treści %s na numer %i\nNastępnie naciśnij na OK i podaj kod zwrotny w wiadomości na czacie.\nCałkowity koszt SMS-a wynosi %s", Amount, TextSMS, Number, VAT);
+							
+							Handle OpenMenu = CreateMenu(ConfirmCreditMenuHandle);
+							SetMenuTitle(OpenMenu, Query);
+							AddMenuItem(OpenMenu, "ok", "OK");
+							SetMenuPagination(OpenMenu, 7);
+							SetMenuExitButton(OpenMenu, true);
+							AddMenuItem(OpenMenu, "back", "Powrót");
+							DisplayMenu(OpenMenu, User, 250);
+						}
+					} else { SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL  DaysMenuHandle #2] %s", Error); }
+				}
+			} else { SQL_GetError(DB, Error, sizeof(Error)); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[MySQL  DaysMenuHandle #3] %s", Error); }
+		}
+	} else if(Data == MenuAction_End) { CloseHandle(MenuID); }
+}
+
+public int ConfirmCreditMenuHandle(Handle MenuID, MenuAction Data, int User, int Info)
+{
+	if(Data == MenuAction_Select)
+	{
+		char Item[16];
+
+		GetMenuItem(MenuID, Info, Item, sizeof(Item));
+		
+		if(StrEqual(Item, "ok")) { PlayerBuyCredits[User] = true; }
+		else { BuyCreditMenu(User, 0); }
+	} else if(Data == MenuAction_End) { CloseHandle(MenuID); }
+}
+
+////////////////////////////////////////////////// End Buy XP Menu ///////////////////////////////////////////////
 
 ////////////////////////////////////////////////// My Services ////////////////////////////////////////////////
 
@@ -452,6 +576,37 @@ public Action CheckSay(User, Arg)
 		
 		return Plugin_Handled;	
 	}
+	
+	else if(PlayerBuyCredits[User])
+	{
+		char Code[32]; 
+		char URL[256];
+		char SID[64];
+		char PremiumID[64];
+	
+		Format(PremiumID, sizeof(PremiumID), "%i", PlayerBuyCache[User]);
+		
+		GetCmdArgString(Code, sizeof(Code));
+		GetClientAuthId(User, AuthId_Engine, SID, sizeof(SID));
+		
+		PlayerBuyCredits[User] = false;
+
+		Format(URL, sizeof(URL), "http://%s/index.php?pages=server_buy_credits&sid=%s&premium=%s&serverid=%i", ShopURL, SID, PremiumID, ServerID);
+		
+		Handle HTTPRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, URL);
+		SteamWorks_SetHTTPRequestNetworkActivityTimeout(HTTPRequest, 10);
+		SteamWorks_SetHTTPRequestGetOrPostParameter(HTTPRequest, "code", Code);
+		SteamWorks_SetHTTPRequestHeaderValue(HTTPRequest, "Online Shop", "Sloenthran");
+		SteamWorks_SetHTTPRequestContextValue(HTTPRequest, 10);
+		SteamWorks_SetHTTPCallbacks(HTTPRequest, ReturnQueryXpHTTP);
+
+ 		if (!SteamWorks_SendHTTPRequest(HTTPRequest)) { CloseHandle(HTTPRequest); LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] Cannot send HTTP request!"); return Plugin_Handled; }
+
+	  	SteamWorks_PrioritizeHTTPRequest(HTTPRequest);
+		
+		return Plugin_Handled;	
+	}
+	
 	return Plugin_Continue;
 }
 
@@ -489,6 +644,51 @@ public int ReturnQueryHTTP(Handle Request, bool Fail, bool CheckSucess, EHTTPSta
 						PrintToChat(Number, "[OnlineShop] Podany przez Ciebie kod jest poprawny!");
 					}
 					else if(StrEqual(StringBreak[0], "extension")){ PrintToChat(Number, "[OnlineShop] Kod był poprawny więc ważność Twojej usługi została przedłużona!"); }
+					else { PrintToChat(Number, "[OnlineShop] Kod zwrotny, który podałeś jest błędny!"); }
+					
+					PlayerBuyCache[Number] = 0;
+					break;
+				}
+			}
+		}
+		
+		CloseHandle(Request);
+	} else { LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] Bad status code (%d)!", Status); CloseHandle(Request); return; }
+}
+
+public int ReturnQueryXpHTTP(Handle Request, bool Fail, bool CheckSucess, EHTTPStatusCode Status, any Data) 
+{
+	if(!CheckSucess) { LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] HTTP request error!"); CloseHandle(Request); return; }
+	
+	if(Status == k_EHTTPStatusCode200OK) {
+		int BodySize; 
+		char BodyBuffer[10000];
+		
+		if(!SteamWorks_GetHTTPResponseBodySize(Request, BodySize)) { LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] Not get response size!"); CloseHandle(Request); return; }
+		if(BodySize > 10000) { LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] Response size is to big!"); CloseHandle(Request); return; }
+		if(!SteamWorks_GetHTTPResponseBodyData(Request, BodyBuffer, BodySize)) { LogToFile("addons/sourcemod/logs/OnlineShop.txt", "[SteamWorks] Not get response data!"); CloseHandle(Request); return; }
+
+		char StringBreak[3][256];
+		ExplodeString(BodyBuffer, "|", StringBreak, sizeof(StringBreak), sizeof(StringBreak[]));
+		
+		int PlayerNumber = GetMaxClients();
+		
+		for (int Number = 1; Number <= PlayerNumber; Number++)
+		{
+			if(IsClientInGame(Number))
+			{
+				char SID[64];
+				
+				GetClientAuthId(Number, AuthId_Engine, SID, sizeof(SID));
+				
+				if(StrEqual(SID, StringBreak[1])) 
+				{
+					if(StrEqual(StringBreak[0], "ok"))
+					{
+						ServerCommand(StringBreak[2]);
+						
+						PrintToChat(Number, "[OnlineShop] Podany przez Ciebie kod jest poprawny!");
+					}
 					else { PrintToChat(Number, "[OnlineShop] Kod zwrotny, który podałeś jest błędny!"); }
 					
 					PlayerBuyCache[Number] = 0;

@@ -17,7 +17,7 @@
 			if($Query > 0)
 			{
 				
-				if($this->CheckMoney($Query, $NumberSMS)
+				if($this->CheckMoney($Query, $NumberSMS))
 				{
 					
 					return true;

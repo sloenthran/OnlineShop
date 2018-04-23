@@ -8,6 +8,12 @@
 		
 			$ID = $Core->ClearText($_POST['ID']);
 			
+			$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
+			$Query->bindValue(":one", $ID, PDO::PARAM_INT);
+			$Query->execute();
+			
+			$Fetch = $Query->fetch();
+			
 			$Query = $MySQL->prepare("DELETE FROM `buy` WHERE `server`=:one");
 			$Query->bindValue(":one", $ID, PDO::PARAM_INT);
 			$Query->execute();
@@ -30,6 +36,8 @@
 			$View->Add("info", "Serwer został poprawnie usunięty!");
 			$View->Add("back", "index.php?pages=admin_delete_servers");
 			$View->Out();
+			
+			$Core->AddAdminLogs("Usunięto serwer <b>".$Fetch['name']."</b> (#".$ID.")");
 		
 		}
 		

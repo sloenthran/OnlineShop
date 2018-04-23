@@ -231,6 +231,21 @@
 			PRIMARY KEY (`id`)
 		);";
 		
+		$Query[] = "CREATE TABLE IF NOT EXISTS `buy_credits` (
+			`id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+			`command` varchar(512) NOT NULL,
+			`server` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		
+		$Query[] = "CREATE TABLE IF NOT EXISTS `service_credits` (
+			`id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+			`price_id` int(255) NOT NULL,
+			`amount` int(255) NOT NULL,
+			`buy_id` int(255) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+		
 		$Query[] = "INSERT INTO `users` VALUES(NULL, '".$User."', '".$Pass."', '1', '0', '".$Mail."', '000000000', '0')";
 
 		$Query[] = "INSERT INTO `settings` VALUES(NULL, 'text_sms', 'Tutaj wpisz kod SMS')";
