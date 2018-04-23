@@ -25,7 +25,7 @@
 			else
 			{
 		
-				$Query = $MySQL->prepare("INSERT INTO `servers` VALUES('', :one, :two, :three)");
+				$Query = $MySQL->prepare("INSERT INTO `servers` VALUES(NULL, :one, :two, :three)");
 				
 				$Query->bindValue(":one", $Name, PDO::PARAM_STR);
 				$Query->bindValue(":two", $IP, PDO::PARAM_STR);

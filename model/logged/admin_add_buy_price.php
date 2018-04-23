@@ -25,7 +25,7 @@
 			else
 			{
 		
-				$Query = $MySQL->prepare("INSERT INTO `service` VALUES('', :one, :two, :three)");
+				$Query = $MySQL->prepare("INSERT INTO `service` VALUES(NULL, :one, :two, :three)");
 				
 				$Query->bindValue(":one", $Price, PDO::PARAM_STR);
 				$Query->bindValue(":two", $Days, PDO::PARAM_STR);

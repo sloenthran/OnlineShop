@@ -40,7 +40,7 @@
 		
 			$Days = $Fetch['days'];
 			
-			$Query = $MySQL->("SELECT `name` FROM `buy` WHERE `id`=:one");
+			$Query = $MySQL->prepare("SELECT `name` FROM `buy` WHERE `id`=:one");
 			$Query->bindValue(":one", $BuyID, PDO::PARAM_INT);
 			$Query->execute();
 			
@@ -48,7 +48,7 @@
 			
 			$PremiumName = $Fetch['name'];
 			
-			$Query = $MySQL->("SELECT `name` FROM `servers` WHERE `id`=:one");
+			$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
 			$Query->bindValue(":one", $_SESSION['SERVERID'], PDO::PARAM_INT);
 			$Query->execute();
 			
