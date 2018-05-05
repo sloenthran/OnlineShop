@@ -20,7 +20,7 @@
 		
 			</tr>';
 		
-			$Query = $MySQL->query("SELECT * FROM `price");
+			$Query = $MySQL->query("SELECT * FROM `price`");
 			
 			while($Fetch = $Query->fetch())
 			{
