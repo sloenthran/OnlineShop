@@ -56,13 +56,13 @@
 				
 				$ID = $Fetch['id'];
 				
-				$Query = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
-				$Query->bindValue(":one", $Fetch['server'], PDO::PARAM_INT);
-				$Query->execute();
+				$QueryTwo = $MySQL->prepare("SELECT `name` FROM `servers` WHERE `id`=:one");
+				$QueryTwo->bindValue(":one", $Fetch['server'], PDO::PARAM_INT);
+				$QueryTwo->execute();
 				
-				$Fetch = $Query->fetch();
+				$FetchTwo = $QueryTwo->fetch();
 				
-				$Buy .= '<option value="'.$ID.'">'.$Fetch['name'].'</option>';
+				$Buy .= '<option value="'.$ID.'">'.$FetchTwo['name'].'</option>';
 				
 			}
 			
