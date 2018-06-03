@@ -42,7 +42,7 @@
 		$Fetch = $Query->fetch();
 		$Data[1] = $Fetch['name'];
 
-		$Core->AddGuestBuyLogs('[Plugin] Zakupiono <b>'.$Data[0].'</b> kredytów na serwerze <b>'.$Data[1].'</b> kodem SMS <b>'.$Code.'</b>');
+		$Core->AddGuestBuyLogs('[Plugin] Zakupiono <b>'.$Data[0].'</b> kredytów na serwerze <b>'.$Data[1].'</b> kodem SMS <b>'.$Code.'</b> ('.$SID.')');
 		
 		$Core->AddServerCash($_GET['serverid'], $Data[2]);
 		
